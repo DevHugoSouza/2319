@@ -2,7 +2,8 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
   <title>Nosso Amor</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -40,8 +41,8 @@
     ];
 
     const container = document.getElementById('bg');
-    const larguraImagem = 200;
-    const alturaImagem = 200;
+    const larguraImagem = window.innerWidth / 10;
+    const alturaImagem = window.innerHeight / 4;
 
     const colunas = Math.ceil(window.innerWidth / larguraImagem);
     const linhas = Math.ceil(window.innerHeight / alturaImagem);
