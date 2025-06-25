@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nosso Amor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="background" id="bg"></div>
+
+  <div class="pagina-livro">
+    <img id="foto" src="fotos/foto1.jpg" alt="Foto do álbum" />
+    <div class="descricao" id="descricao">
+        Impossível descrever o quanto eu amo ver você tirando fotos, a fotográfa mais gata que existe
+    </div>
+    <div class="controles">
+      <button id="anterior">&#10094;</button>
+      <button id="proxima">&#10095;</button>
+    </div>
+  </div>
+
+  <script>
+    // Fundo com imagens em mosaico
+    const imagens = [
+      'fotos/foto1.jpg',
+      'fotos/foto2.jpg',
+      'fotos/foto3.jpg',
+      'fotos/foto4.jpg',
+      'fotos/foto5.jpg',
+      'fotos/foto6.jpg',
+      'fotos/foto7.jpg',
+      'fotos/foto8.jpg',
+      'fotos/foto9.jpg',
+      'fotos/foto10.jpg',
+      'fotos/foto11.jpg',
+      'fotos/foto12.jpg',
+      'fotos/foto13.jpg',
+    ];
+
+    const container = document.getElementById('bg');
+    const larguraImagem = 200;
+    const alturaImagem = 200;
+
+    const colunas = Math.ceil(window.innerWidth / larguraImagem);
+    const linhas = Math.ceil(window.innerHeight / alturaImagem);
+    const totalImagens = colunas * linhas + colunas;
+
+    for (let i = 0; i < totalImagens; i++) {
+      const img = document.createElement('img');
+      img.src = imagens[i % imagens.length];
+      container.appendChild(img);
+    }
+
+    // Álbum com setas e descrições
+    const albuns = [
+      {
+        imagem: 'fotos/foto1.jpg',
+        descricao: 'Impossível descrever o quanto eu amo ver você tirando fotos, a fotográfa mais gata que existe'
+      },
+      {
+        imagem: 'fotos/foto3.jpg',
+        descricao: 'Nunca tomei um sorvete tão gostoso igual esse'
+      },
+      {
+        imagem: 'fotos/foto4.jpg',
+        descricao: 'Seu abraço slencia o barulho do resto do mundo'
+      },
+      {
+        imagem: 'fotos/foto5.jpg',
+        descricao: 'Nesse dia eu percebi que a gente saiu do pinterest'
+      },
+            {
+        imagem: 'fotos/foto14.jpg',
+        descricao: 'Aqui só quero exaltar a GOSTOSA DA MINHA NAMORADA'
+      },
+      {
+        imagem: 'fotos/foto6.jpg',
+        descricao: 'Uma jovem senhora rica residente de Monte Verde que levou para casa esse humilde camponês'
+      },
+      {
+        imagem: 'fotos/foto7.jpg',
+        descricao: 'Você conseguiu não só me levar pra um festival, como me fazer adorar cada segundo lá'
+      },
+      {
+        imagem: 'fotos/foto8.jpg',
+        descricao: 'Aqui não tem como, qualquer um fala que eu tava jogado no chão do STL e você quis tirar uma foto comigo'
+      },
+      {
+        imagem: 'fotos/foto9.jpg',
+        descricao: 'Essa foto literalmente não precisa de legenda'
+      },
+      {
+        imagem: 'fotos/foto10.jpg',
+        descricao: 'Nesse dia eu descobri que o papel que vem em cima do lanche não é comestível (eu acreditei que era)'
+      },
+      {
+        imagem: 'fotos/foto11.jpg',
+        descricao: 'A melhor viagem pra praia que eu já fiz, alí eu percebi que tudo com você se torna incrível'
+      },
+      {
+        imagem: 'fotos/foto12.jpg',
+        descricao: 'Saudades, muitas saudades dessa viagem 🥹🥹'
+      },
+      {
+        imagem: 'fotos/foto13.jpg',
+        descricao: 'Passei a gostar de quermesses quando comecei a ir com você, igual passei a gostar de shopping, cinema, centro, sabádos, domingos, tudo'
+      },
+            {
+        imagem: 'fotos/foto15.jpg',
+        descricao: 'Obrigado por tudo meu amor, você é melhor parte da minha vida, eu te amo em níveis que talvez você nunca imagine ❤️❤️❤️'
+      },
+    ];
+
+    let indexAtual = 0;
+
+    const imgEl = document.getElementById('foto');
+    const descEl = document.getElementById('descricao');
+    const btnAnterior = document.getElementById('anterior');
+    const btnProxima = document.getElementById('proxima');
+
+    btnAnterior.addEventListener('click', () => {
+  indexAtual = (indexAtual - 1 + albuns.length) % albuns.length;
+  atualizarFoto();
+    });
+
+    btnProxima.addEventListener('click', () => {
+    indexAtual = (indexAtual + 1) % albuns.length;
+    atualizarFoto();
+    });
+
+    const foto = document.getElementById('foto');
+let startX = 0;
+let endX = 0;
+
+foto.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+});
+
+foto.addEventListener('touchmove', e => {
+  endX = e.touches[0].clientX;
+});
+
+foto.addEventListener('touchend', () => {
+  handleSwipe();
+});
+
+foto.addEventListener('mousedown', e => {
+  startX = e.clientX;
+});
+
+foto.addEventListener('mouseup', e => {
+  endX = e.clientX;
+  handleSwipe();
+});
+
+function handleSwipe() {
+  const deltaX = endX - startX;
+  const swipeThreshold = 50; // distância mínima para considerar swipe
+
+  if (deltaX > swipeThreshold) {
+    // Swipe para a direita → foto anterior
+    btnAnterior.click();
+  } else if (deltaX < -swipeThreshold) {
+    // Swipe para a esquerda → próxima foto
+    btnProxima.click();
+  }
+  // resetar valores
+  startX = 0;
+  endX = 0;
+}
+
+
+    function atualizarFoto() {
+    imgEl.classList.add('fade');
+    descEl.classList.add('fade');
+
+    setTimeout(() => {
+        const atual = albuns[indexAtual];
+        imgEl.src = atual.imagem;
+        descEl.textContent = atual.descricao;
+    }, 300);
+
+    setTimeout(() => {
+        imgEl.classList.remove('fade');
+        descEl.classList.remove('fade');
+    }, 600);
+    }
+
+
+  </script>
+
+</body>
+</html>
